@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('pelayanans', function (Blueprint $table) {
             $table->id();
             $table->string('jenis_pelayanan');
-            $table->date('tanggal')->useCurrent();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
             $table->timestamps();
         });
     }

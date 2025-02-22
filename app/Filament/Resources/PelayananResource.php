@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use App\Models\Pelayanan;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Radio;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
@@ -25,7 +26,12 @@ class PelayananResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('jenis_pelayanan')
+                Radio::make('jenis_pelayanan')
+                ->options([
+                    'izin_keramaian' => 'Izin Keramaian',
+                    'ppl' => 'PPL',
+                    'pam' => 'PAM'
+                ])
             ]);
     }
 
@@ -33,7 +39,9 @@ class PelayananResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('jenis_pelayanan')
+                TextColumn::make('jenis_pelayanan'),
+                TextColumn::make('tanggal')->date('Y-m-d'),
+                TextColumn::make('jam')->time('H:i:s'),
             ])
             ->filters([
                 //

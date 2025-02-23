@@ -27,10 +27,11 @@ class PelayananResource extends Resource
         return $form
             ->schema([
                 Radio::make('jenis_pelayanan')
+                ->required()
                 ->options([
-                    'izin_keramaian' => 'Izin Keramaian',
-                    'ppl' => 'PPL',
-                    'pam' => 'PAM'
+                    'Izin Keramaian' => 'Izin Keramaian',
+                    'PPL' => 'PPL',
+                    'PAM' => 'PAM'
                 ])
             ]);
     }
@@ -39,9 +40,18 @@ class PelayananResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('jenis_pelayanan'),
-                TextColumn::make('tanggal')->date('Y-m-d'),
-                TextColumn::make('jam')->time('H:i:s'),
+                TextColumn::make('jenis_pelayanan')
+                ->searchable()
+                ->copyable()
+                ->copyMessage('Disalin!'),
+                TextColumn::make('tanggal')->date('Y-m-d')
+                ->sortable()
+                ->copyable()
+                ->copyMessage('Disalin!'),
+                TextColumn::make('jam')->time('H:i:s')
+                ->sortable()
+                ->copyable()
+                ->copyMessage('Disalin!'),
             ])
             ->filters([
                 //

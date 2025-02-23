@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\PelayananResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -29,7 +30,8 @@ class CsPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->discoverResources(in: app_path('Filament/Cs/Resources'), for: 'App\\Filament\\Cs\\Resources')
+            ->resources([PelayananResource::class
+            ])
             ->discoverPages(in: app_path('Filament/Cs/Pages'), for: 'App\\Filament\\Cs\\Pages')
             ->pages([
                 Pages\Dashboard::class,

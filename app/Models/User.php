@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -57,6 +58,10 @@ class User extends Authenticatable
         }
 
         return true;
+    }
+        public function staff()
+    {
+        return $this->hasOne(StaffCS::class, 'user_id');
     }
 
 }

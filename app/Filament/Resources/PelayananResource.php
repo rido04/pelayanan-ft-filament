@@ -46,6 +46,7 @@ class PelayananResource extends Resource
         $data['created_by'] = Auth::id();
         return $data;
     }
+    
         public static function getEloquentQuery(): Builder
     {
         if (Auth::user()->role === 'admin') {

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
+use App\Models\User;
 use Filament\Tables;
 use App\Models\StaffCs;
 use Filament\Forms\Form;
@@ -18,24 +19,36 @@ use App\Filament\Resources\StaffCsResource\RelationManagers;
 
 class StaffCsResource extends Resource
 {
-    public static function model(): string
-{
-    return StaffCs::class;
-}
+    protected static ?string $model = User::class;
+
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
-    protected static ?string $label ='Kelola Staff CS';
+    protected static ?string $label ='Kelola Staff';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return User::query();
+    }
+
 
 
     public static function form(Form $form): Form
     {
         return $form->schema([
-            TextInput::make('name')->required(),
+            TextInput::make('name')
+            ->label('Nama Staff')
+            ->required(),
             TextInput::make('email')->email()->required(),
-            Select::make('role')->options([
-                'admin' => 'Admin',
-                'staff' => 'Staff CS',
-            ])->required(),
+            Select::make('role')
+                ->options([
+                    'admin' => 'Admin',
+                    'staff' => 'Staff CS',
+                ])
+                ->required(),
+            TextInput::make('password')
+                ->password()
+                ->required()
+                ->dehydrateStateUsing(fn ($state) => bcrypt($state)), // Enkripsi password
         ]);
     }
 
@@ -43,11 +56,12 @@ class StaffCsResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nama')
-                ->label('Nama CS'),
-                TextColumn::make('email')
-                ->label('Email'),
+            TextColumn::make('name')->label('Nama Staff')->sortable()->searchable(),
+            TextColumn::make('email')->label('Email')->sortable(),
+            TextColumn::make('role')->label('Sebagai')->sortable(),
+            TextColumn::make('created_at')->label('Bergabung')->dateTime('d M Y'),
             ])
+
             ->filters([
                 //
             ])

@@ -45,4 +45,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+        public function canAccessPanel(string $panel): bool
+    {
+        if ($panel === 'admin' && $this->role !== 'admin') {
+            return false;
+        }
+
+        if ($panel === 'cs' && $this->role !== 'staff') {
+            return false;
+        }
+
+        return true;
+    }
+
 }

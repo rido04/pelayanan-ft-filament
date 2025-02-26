@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('tanggal')->nullable();
             $table->time('jam')->nullable();
             $table->unsignedBigInteger('created_by')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

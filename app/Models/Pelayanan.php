@@ -21,4 +21,10 @@ class Pelayanan extends Model
             $model->jam = Carbon::now()->format('H:i:s');
         });
     }
+
+        public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
 }

@@ -46,6 +46,14 @@ class PelayananResource extends Resource
         $data['created_by'] = Auth::id();
         return $data;
     }
+        public static function getEloquentQuery(): Builder
+    {
+        if (Auth::user()->role === 'admin') {
+            return parent::getEloquentQuery();
+        }
+
+        return parent::getEloquentQuery()->where('created_by', Auth::id());
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -77,6 +85,11 @@ class PelayananResource extends Resource
                 ->sortable()
                 ->copyable()
                 ->copyMessage('Disalin!'),
+                TextColumn::make('creator.name')
+                ->label('Dibuat oleh')
+                ->sortable()
+                ->searchable()
+
             ])
             ->filters([
                 //

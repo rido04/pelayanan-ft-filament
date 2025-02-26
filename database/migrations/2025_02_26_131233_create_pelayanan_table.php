@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('jenis_pelayanan');
             $table->date('tanggal')->nullable();
             $table->time('jam')->nullable();
+            $table->unsignedBigInteger('created_by'); // Menyimpan siapa yang input data
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

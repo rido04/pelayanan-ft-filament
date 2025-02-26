@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\StaffCsResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -63,7 +64,7 @@ class StaffCsResource extends Resource
             ])
 
             ->filters([
-                //
+            
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

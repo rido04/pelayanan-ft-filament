@@ -8,11 +8,13 @@ use Filament\Forms\Form;
 use App\Models\Pelayanan;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Radio;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Hidden;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PelayananResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -46,7 +48,6 @@ class PelayananResource extends Resource
         $data['created_by'] = Auth::id();
         return $data;
     }
-    
         public static function getEloquentQuery(): Builder
     {
         if (Auth::user()->role === 'admin') {
@@ -93,11 +94,19 @@ class PelayananResource extends Resource
 
             ])
             ->filters([
-                //
+                SelectFilter::make('jenis_pelayanan')
+                ->multiple()
+                ->options([
+                    'Izin Keramaian' => 'Izin Keramaian',
+                    'PPL' => 'PPL',
+                    'PAM' => 'PAM'
+            ])
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                ->label('Ubah'),
+                Tables\Actions\DeleteAction::make()
+                ->label('Hapus'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

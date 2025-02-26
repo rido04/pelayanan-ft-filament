@@ -9,6 +9,8 @@ use App\Models\Pelayanan;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Radio;
+use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\Hidden;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,10 +24,33 @@ class PelayananResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function query(Builder $query): Builder
+    {
+        return Auth::user()->role === 'admin'
+            ? $query // Admin melihat semua data
+            : $query->where('created_by', Auth::id()); // CS hanya melihat data sendiri
+    }
+
+        public static function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['created_by'] = Auth::id(); // Isi otomatis dengan ID user yang login
+        return $data;
+    }
+        public static function shouldRegisterNavigation(): bool
+    {
+        return Auth::user()->role === 'admin' || Auth::user()->role === 'staff';
+    }
+
+        public static function mutateFormDataBeforeSave(array $data): array
+    {
+        $data['created_by'] = Auth::id();
+        return $data;
+    }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Hidden::make('created_by')->default(Auth::id()),
                 Radio::make('jenis_pelayanan')
                 ->required()
                 ->options([

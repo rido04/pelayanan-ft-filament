@@ -14,11 +14,11 @@ return new class extends Migration
     {
         Schema::create('pelayanans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('jenis_pelayanan');
             $table->date('tanggal')->nullable();
             $table->time('jam')->nullable();
-            $table->unsignedBigInteger('created_by'); // Menyimpan siapa yang input data
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('created_by')->nullable()->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +28,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pelayanans');
+        Schema::table('pelayanans', function (Blueprint $table) {
+            $table->dropColumn('created_by');
+        });
     }
 };

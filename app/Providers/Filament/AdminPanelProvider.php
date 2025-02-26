@@ -10,6 +10,8 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Illuminate\Support\Facades\Auth;
 use Filament\Http\Middleware\Authenticate;
+use App\Filament\Resources\PelayananResource;
+use App\Filament\Resources\StaffCsResource;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -45,6 +47,10 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
                 'admin', // Middleware untuk admin
+            ])
+            ->resources([
+                PelayananResource::class,
+                StaffCsResource::class,
             ])
             ->pages([
                 Pages\Dashboard::class,

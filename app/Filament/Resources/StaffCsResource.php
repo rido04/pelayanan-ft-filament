@@ -8,6 +8,7 @@ use App\Models\StaffCs;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,7 +18,10 @@ use App\Filament\Resources\StaffCsResource\RelationManagers;
 
 class StaffCsResource extends Resource
 {
-    protected static ?string $model = StaffCs::class;
+    public static function model(): string
+{
+    return StaffCs::class;
+}
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $label ='Kelola Staff CS';
@@ -25,20 +29,14 @@ class StaffCsResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                TextInput::make('nama')
-                ->required()
-                ->label('Nama'),
-                TextInput::make('email')
-                ->required()
-                ->email()
-                ->label('Email'),
-                TextInput::make('password')
-                ->required()
-                ->password()
-                ->label('Password'),
-            ]);
+        return $form->schema([
+            TextInput::make('name')->required(),
+            TextInput::make('email')->email()->required(),
+            Select::make('role')->options([
+                'admin' => 'Admin',
+                'staff' => 'Staff CS',
+            ])->required(),
+        ]);
     }
 
     public static function table(Table $table): Table

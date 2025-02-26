@@ -19,6 +19,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use App\Filament\Resources\PelayananResource;
 
 class CsPanelProvider extends PanelProvider
 {
@@ -46,7 +47,9 @@ class CsPanelProvider extends PanelProvider
                 Authenticate::class,
                 'cs', // Middleware untuk CS
             ])
-
+            ->resources([
+                PelayananResource::class,
+            ])
             ->pages([
                 Pages\Dashboard::class,
             ])

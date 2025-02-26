@@ -10,7 +10,7 @@ class Pelayanan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['jenis_pelayanan', 'tanggal', 'jam'];
+    protected $fillable = ['jenis_pelayanan', 'tanggal', 'jam', "created_by"];
 
     protected static function boot()
     {

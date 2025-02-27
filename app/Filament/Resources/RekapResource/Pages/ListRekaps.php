@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\RekapResource\Pages;
 
-use App\Filament\Resources\RekapResource;
 use Filament\Actions;
+use App\Filament\Resources\RekapResource;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\RekapResource\Widgets\RekapChart;
 
 class ListRekaps extends ListRecords
 {
@@ -14,6 +15,13 @@ class ListRekaps extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+           RekapChart::class,
         ];
     }
 }

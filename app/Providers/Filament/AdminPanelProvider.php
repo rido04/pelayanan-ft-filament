@@ -24,6 +24,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use App\Filament\Resources\RekapResource\Widgets\RekapChart;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use App\Filament\Resources\PelayananResource\Widgets\PelayananChart;
 
@@ -37,6 +38,8 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->widgets([
                 PelayananChart::class,
+                RekapChart::class,
+
             ])
             ->colors([
                 'primary' => Color::Amber,

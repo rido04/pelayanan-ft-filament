@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\PelayananResource\Widgets\PelayananChart;
 use Closure;
 use Filament\Pages;
 use Filament\Panel;
@@ -29,6 +30,9 @@ class CsPanelProvider extends PanelProvider
             ->id('cs')
             ->path('cs')
             ->login()
+            ->widgets([
+                PelayananChart::class,
+            ])
             ->colors([
                 'primary' => Color::Blue,
             ])

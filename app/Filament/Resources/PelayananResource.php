@@ -18,6 +18,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PelayananResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\RekapResource\Widgets\RekapChart;
 use App\Filament\Resources\PelayananResource\RelationManagers;
 
 class PelayananResource extends Resource
@@ -26,6 +27,7 @@ class PelayananResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $label ='Input Pelayanan';
     public static function query(Builder $query): Builder
     {
         return Auth::user()->role === 'admin'
@@ -113,6 +115,13 @@ class PelayananResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            RekapChart::class,
+        ];
     }
 
     public static function getRelations(): array

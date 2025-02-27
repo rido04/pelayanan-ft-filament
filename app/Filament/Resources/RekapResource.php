@@ -17,6 +17,7 @@ use Filament\Tables\Filters\MultiSelectFilter;
 use App\Filament\Resources\RekapResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\RekapResource\RelationManagers;
+use App\Filament\Resources\RekapResource\Widgets\RekapChart;
 
 class RekapResource extends Resource
 {
@@ -59,6 +60,12 @@ class RekapResource extends Resource
 
 
     }
+    public static function getWidgets(): array
+    {
+        return [
+            RekapChart::class,
+        ];
+    }
 
     public static function getRelations(): array
     {
@@ -75,4 +82,6 @@ class RekapResource extends Resource
             'edit' => Pages\EditRekap::route('/{record}/edit'),
         ];
     }
+
+
 }

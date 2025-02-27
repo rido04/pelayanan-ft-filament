@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\PelayananResource\Pages;
 
-use App\Filament\Resources\PelayananResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\PelayananResource;
+use App\Filament\Resources\PelayananResource\Widgets\PelayananChart;
 
 class ListPelayanans extends ListRecords
 {
@@ -14,6 +15,13 @@ class ListPelayanans extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            PelayananChart::class,
         ];
     }
 }

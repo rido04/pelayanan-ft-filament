@@ -56,7 +56,8 @@ class UserResource extends Resource
         ->columns([
             TextColumn::make('name')->sortable()->searchable(),
             TextColumn::make('email')->sortable()->searchable(),
-            BadgeColumn::make('role')
+            TextColumn::make('role')
+                ->badge()
                 ->colors([
                     'success' => 'admin',
                     'warning' => 'staff',

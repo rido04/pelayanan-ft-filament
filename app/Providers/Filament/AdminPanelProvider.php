@@ -25,6 +25,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use App\Filament\Resources\PelayananResource\Widgets\PelayananChart;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -34,6 +35,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->widgets([
+                PelayananChart::class,
+            ])
             ->colors([
                 'primary' => Color::Amber,
             ])

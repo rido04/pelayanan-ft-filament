@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pelayanan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['jenis_pelayanan', 'tanggal', 'jam', "created_by"];
+    protected $fillable = ['user_id','name','jenis_pelayanan', 'tanggal', 'jam', "created_by"];
 
     protected static function boot()
     {
@@ -24,7 +25,12 @@ class Pelayanan extends Model
 
         public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
 }

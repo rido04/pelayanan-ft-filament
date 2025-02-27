@@ -7,11 +7,15 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use Filament\Pages\Dashboard;
 use Filament\Support\Colors\Color;
+use Filament\Widgets\AccountWidget;
 use Illuminate\Support\Facades\Auth;
+use Filament\Widgets\FilamentInfoWidget;
+use App\Filament\Resources\RekapResource;
 use Filament\Http\Middleware\Authenticate;
-use App\Filament\Resources\PelayananResource;
 use App\Filament\Resources\StaffCsResource;
+use App\Filament\Resources\PelayananResource;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -51,13 +55,14 @@ class AdminPanelProvider extends PanelProvider
             ->resources([
                 PelayananResource::class,
                 StaffCsResource::class,
+                RekapResource::class,
             ])
             ->pages([
-                Pages\Dashboard::class,
+                Dashboard::class,
             ])
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                AccountWidget::class,
+                FilamentInfoWidget::class,
             ]);
     }
 }

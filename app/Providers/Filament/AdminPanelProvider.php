@@ -38,7 +38,6 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->widgets([
                 PelayananChart::class,
-                RekapChart::class,
 
             ])
             ->colors([

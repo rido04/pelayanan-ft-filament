@@ -28,36 +28,28 @@ class PelayananResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $label ='Input Pelayanan';
-    public static function query(Builder $query): Builder
+    public static function getEloquentQuery(): Builder
     {
-        return Auth::user()->role === 'admin'
-            ? $query // Admin melihat semua data
-            : $query->where('created_by', Auth::id()); // CS hanya melihat data sendiri
+        return parent::getEloquentQuery()->where('created_by', Auth::id());
     }
+
 
         public static function mutateFormDataBeforeCreate(array $data): array
     {
         $data['created_by'] = Auth::id(); // Isi otomatis dengan ID user yang login
         return $data;
     }
-        public static function shouldRegisterNavigation(): bool
-    {
-        return Auth::user()->role === 'admin' || Auth::user()->role === 'staff';
-    }
+    //     public static function shouldRegisterNavigation(): bool
+    // {
+    //     return Auth::user()->role === 'admin' || Auth::user()->role === 'staff';
+    // }
 
         public static function mutateFormDataBeforeSave(array $data): array
     {
         $data['created_by'] = Auth::id();
         return $data;
     }
-        public static function getEloquentQuery(): Builder
-    {
-        if (Auth::user()->role === 'admin') {
-            return parent::getEloquentQuery();
-        }
 
-        return parent::getEloquentQuery()->where('created_by', Auth::id());
-    }
     public static function form(Form $form): Form
     {
         return $form

@@ -7,8 +7,10 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use App\Filament\Pages\Dashboard;
 use Filament\Support\Colors\Color;
 use Illuminate\Support\Facades\Auth;
+use App\Filament\Widgets\CustomFooter;
 use Filament\Widgets\FilamentInfoWidget;
 use Filament\Http\Middleware\Authenticate;
 use App\Filament\Resources\PelayananResource;
@@ -56,11 +58,11 @@ class CsPanelProvider extends PanelProvider
                 PelayananResource::class,
             ])
             ->pages([
-                Pages\Dashboard::class,
+                Dashboard::class,
             ])
             ->widgets([
-                Widgets\AccountWidget::class,
-                FilamentInfoWidget::class,
+                PelayananChart::class,
+                CustomFooter::class,
             ]);
     }
 }

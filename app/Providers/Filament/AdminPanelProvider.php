@@ -2,18 +2,12 @@
 
 namespace App\Providers\Filament;
 
-use Closure;
-use Filament\Pages;
 use Filament\Panel;
-use Filament\Widgets;
 use Filament\PanelProvider;
-use Filament\Pages\Dashboard;
+use App\Filament\Pages\Dashboard;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
-use Illuminate\Support\Facades\Auth;
-use Filament\Widgets\FilamentInfoWidget;
+use App\Filament\Widgets\CustomFooter;
 use App\Filament\Resources\RekapResource;
-use Filament\Http\Middleware\Authenticate;
 use App\Filament\Resources\StaffCsResource;
 use App\Filament\Resources\PelayananResource;
 use Illuminate\Session\Middleware\StartSession;
@@ -36,10 +30,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->widgets([
-                PelayananChart::class,
-
-            ])
+            ->brandName('Town Management') // Ganti nama Filament dengan teks yang diinginkan
+            ->darkMode()
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -55,8 +47,7 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                Authenticate::class,
-                'admin', // Middleware untuk admin
+                \Filament\Http\Middleware\Authenticate::class,
             ])
             ->resources([
                 PelayananResource::class,
@@ -64,11 +55,12 @@ class AdminPanelProvider extends PanelProvider
                 RekapResource::class,
             ])
             ->pages([
-                Dashboard::class,
+                Dashboard::class, // Pakai dashboard custom
             ])
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                PelayananChart::class,
+                RekapChart::class,
+                CustomFooter::class,
             ]);
     }
 }

@@ -24,7 +24,11 @@ class RekapChart extends ChartWidget
                 [
                     'label' => 'Jumlah Pelayanan',
                     'data' => $data->values(),
-                    'backgroundColor' => ['#FF6384', '#36A2EB', '#FFCE56'],
+                    'backgroundColor' => [
+                        '#0D9488',
+                        '#CA8A04',
+                        '#FFCE56'
+                    ],
                 ],
             ],
             'labels' => $data->keys(),

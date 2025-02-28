@@ -27,8 +27,8 @@ class PelayananChart extends ChartWidget
                     'label' => 'Jumlah Pelayanan',
                     'data' => array_values($data),
                     'backgroundColor' => [
-                        '#FF6384',
-                        '#36A2EB',
+                        '#0D9488',
+                        '#CA8A04',
                         '#FFCE56',
                     ],
                 ],

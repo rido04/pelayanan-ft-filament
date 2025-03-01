@@ -10,12 +10,16 @@ use Filament\Forms\Form;
 use App\Models\Pelayanan;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Filters\MultiSelectFilter;
 use App\Filament\Resources\RekapResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
 use App\Filament\Resources\RekapResource\RelationManagers;
 use App\Filament\Resources\RekapResource\Widgets\RekapChart;
 
@@ -46,17 +50,44 @@ class RekapResource extends Resource
                     ->date(),
                 TextColumn::make('jam')
                     ->label('Jam')
-                    ->time(),
+                    ->time()
+                    ->summarize([
+                Count::make()->label('Total Pelayanan')
+            ]),
             ])
             ->filters([
                 SelectFilter::make('creator')
-                ->label('Pilih Staff yang ingin direkap')
-                ->relationship('creator', 'name') // Pastikan ada relasi di Model Pelayanan
-                ->searchable()
-                ->preload()
-                ->multiple()
+                    ->label('Pilih Staff yang ingin direkap')
+                    ->relationship('creator', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->multiple(),
+                    
+                Filter::make('created_between')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from')
+                            ->label('Dari Tanggal'),
+                        Forms\Components\DatePicker::make('created_until')
+                            ->label('Sampai Tanggal'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('tanggal', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('tanggal', '<=', $date),
+                            );
+                    })
             ])
-            ->defaultSort('tanggal', 'desc');
+            ->defaultSort('tanggal', 'desc')
+            ->headerActions([
+                ExportAction::make()
+                    ->label('Export Data')
+                    ->icon('heroicon-m-arrow-down-tray'),
+            ]);
 
 
     }

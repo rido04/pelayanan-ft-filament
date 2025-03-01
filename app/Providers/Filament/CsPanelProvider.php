@@ -33,6 +33,7 @@ class CsPanelProvider extends PanelProvider
             ->id('cs')
             ->path('cs')
             ->login()
+            ->brandName('Town Management - CS')
             ->widgets([
                 PelayananChart::class,
             ])

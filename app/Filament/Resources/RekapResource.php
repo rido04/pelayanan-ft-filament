@@ -109,7 +109,6 @@ class RekapResource extends Resource
     {
         return [
             'index' => Pages\ListRekaps::route('/'),
-            'create' => Pages\CreateRekap::route('/create'),
             'edit' => Pages\EditRekap::route('/{record}/edit'),
         ];
     }

@@ -27,24 +27,22 @@ class PelayananResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $label ='Input Pelayanan';
+    protected static ?string $label ='Pelayanan Hari Ini';
+
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('created_by', Auth::id());
+        return parent::getEloquentQuery()
+        ->where('created_by', Auth::id())
+        ->whereDate('tanggal', now()->toDateString());
     }
 
-
-        public static function mutateFormDataBeforeCreate(array $data): array
+    public static function mutateFormDataBeforeCreate(array $data): array
     {
         $data['created_by'] = Auth::id(); // Isi otomatis dengan ID user yang login
         return $data;
     }
-    //     public static function shouldRegisterNavigation(): bool
-    // {
-    //     return Auth::user()->role === 'admin' || Auth::user()->role === 'staff';
-    // }
 
-        public static function mutateFormDataBeforeSave(array $data): array
+    public static function mutateFormDataBeforeSave(array $data): array
     {
         $data['created_by'] = Auth::id();
         return $data;

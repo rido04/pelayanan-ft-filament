@@ -68,9 +68,6 @@ This project is an expansion of my first Laravel 11 and Filament-based system. I
     -   Input daily service records
     -   View only their own data
 
-## 📷 Screenshots
-
-&#x20;
 
 ## 🤝 Contributing
 
